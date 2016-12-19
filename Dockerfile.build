@@ -1,0 +1,16 @@
+FROM go:latest
+
+LABEL app="build-go-bingwallpaper"
+LABEL REPO="https://github.com/genzj/go-bingwallpaper"
+
+ENV GOROOT=/usr/lib/go \
+    GOPATH=/gopath \
+    GOBIN=/gopath/bin \
+    PROJPATH=/gopath/src/github.com/genzj/go-bingwallpaper
+
+# Because of https://github.com/docker/docker/issues/14914
+ENV PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
+WORKDIR /gopath/src/github.com/genzj/go-bingwallpaper
+
+CMD ["make","build-alpine"]

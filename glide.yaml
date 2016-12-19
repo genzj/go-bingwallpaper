@@ -1,0 +1,5 @@
+package: github.com/genzj/go-bingwallpaper
+import:
+- package: github.com/spf13/viper
+- package: github.com/Sirupsen/logrus
+- package: github.com/smallnest/goreq
