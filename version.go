@@ -1,5 +1,8 @@
 package main
 
+// name of the project
+const APP_NAME string = "go-bingwallpaper"
+
 // The git commit that was compiled. This will be filled in by the compiler.
 var GitCommit string
 
