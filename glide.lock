@@ -1,5 +1,5 @@
-hash: c5263292e8f4de44172919093c78002fc9f87250047293c1a0665a672e99dbf6
-updated: 2016-12-19T17:23:12.891512696+08:00
+hash: abf28c52fa1f2c37f9fa9cd0a83e1439ccfbed10fd3125d5c590e01ade9a0e55
+updated: 2016-12-21T11:15:30.532787208+08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197
@@ -32,6 +32,8 @@ imports:
   - mem
 - name: github.com/spf13/cast
   version: 24b6558033ffe202bf42f0f3b870dcc798dd2ba8
+- name: github.com/spf13/cobra
+  version: b62566898a99f2db9c68ed0026aa0a052e59678d
 - name: github.com/spf13/jwalterweatherman
   version: 33c24e77fb80341fe7130ee7c594256ff08ccc46
 - name: github.com/spf13/pflag
