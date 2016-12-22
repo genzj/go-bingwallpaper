@@ -2,9 +2,12 @@ package log
 
 import (
 	"os"
+	"path"
+	"runtime"
+	"strings"
 
 	"github.com/Sirupsen/logrus"
-	"github.com/genzj/go-bingwallpaper/config"
+	"github.com/spf13/viper"
 )
 
 // Logger defines a set of methods for writing application logs. Derived from and
@@ -39,21 +42,21 @@ type Logger interface {
 var defaultLogger *logrus.Logger
 
 func init() {
-	defaultLogger = newLogrusLogger(config.Config())
+	defaultLogger = newLogrusLogger()
 }
 
-func NewLogger(cfg config.Provider) *logrus.Logger {
-	return newLogrusLogger(cfg)
+func NewLogger() *logrus.Logger {
+	return newLogrusLogger()
 }
 
-func newLogrusLogger(cfg config.Provider) *logrus.Logger {
+func newLogrusLogger() *logrus.Logger {
 	l := logrus.New()
-	if cfg.GetBool("json_logs") {
+	if viper.GetBool("json_logs") {
 		l.Formatter = new(logrus.JSONFormatter)
 	}
 	l.Out = os.Stderr
 
-	switch cfg.GetString("loglevel") {
+	switch viper.GetString("loglevel") {
 	case "debug":
 		l.Level = logrus.DebugLevel
 	case "warning":
@@ -63,6 +66,7 @@ func newLogrusLogger(cfg config.Provider) *logrus.Logger {
 	default:
 		l.Level = logrus.DebugLevel
 	}
+	l.Hooks.Add(ContextHook{})
 	return l
 }
 
@@ -202,4 +206,28 @@ func Warningln(args ...interface{}) {
 // Warnln package-level convenience method.
 func Warnln(args ...interface{}) {
 	defaultLogger.Warnln(args...)
+}
+
+type ContextHook struct{}
+
+func (hook ContextHook) Levels() []logrus.Level {
+	return logrus.AllLevels
+}
+
+func (hook ContextHook) Fire(entry *logrus.Entry) error {
+	pc := make([]uintptr, 3, 3)
+	cnt := runtime.Callers(7, pc)
+
+	for i := 0; i < cnt; i++ {
+		fu := runtime.FuncForPC(pc[i] - 1)
+		name := fu.Name()
+		if !strings.Contains(name, "github.com/Sirupsen/logrus") && !strings.Contains(name, "github.com/genzj/go-bingwallpaper/log.") {
+			file, line := fu.FileLine(pc[i] - 1)
+			entry.Data["__file__"] = path.Base(file)
+			entry.Data["__func__"] = path.Base(name)
+			entry.Data["__line__"] = line
+			break
+		}
+	}
+	return nil
 }

@@ -1,8 +1,6 @@
 package logrus
 
-import (
-	"io"
-)
+import "io"
 
 var (
 	// std is the name of the standard logger in stdlib `log`
