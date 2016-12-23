@@ -1,5 +1,5 @@
-hash: abf28c52fa1f2c37f9fa9cd0a83e1439ccfbed10fd3125d5c590e01ade9a0e55
-updated: 2016-12-21T11:15:30.532787208+08:00
+hash: 19e475029aefe79d31fd34482aeedf381ae6b51ff3338434199e032c1698117a
+updated: 2016-12-23T13:58:12.3652124+08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197
@@ -14,10 +14,18 @@ imports:
   - json/parser
   - json/scanner
   - json/token
+- name: github.com/inconshreveable/mousetrap
+  version: 76626ae9c91c4f2a10f34cad8ce83ea42c93bb75
+- name: github.com/kardianos/osext
+  version: c2c54e542fb797ad986b31721e1baedf214ca413
 - name: github.com/magiconair/properties
   version: 9c47895dc1ce54302908ab8a43385d1f5df2c11c
 - name: github.com/mitchellh/mapstructure
   version: bfdb1a85537d60bc7e954e600c250219ea497417
+- name: github.com/nicksnyder/go-i18n
+  version: f757c9f9b69c16ff69d38dbf224be28a7b6537bb
+  subpackages:
+  - goi18n
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
@@ -33,7 +41,7 @@ imports:
 - name: github.com/spf13/cast
   version: 24b6558033ffe202bf42f0f3b870dcc798dd2ba8
 - name: github.com/spf13/cobra
-  version: b62566898a99f2db9c68ed0026aa0a052e59678d
+  version: de09d9ce07d0d8a74442cfeaa91628cf9492cc23
 - name: github.com/spf13/jwalterweatherman
   version: 33c24e77fb80341fe7130ee7c594256ff08ccc46
 - name: github.com/spf13/pflag

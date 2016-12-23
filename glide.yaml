@@ -5,3 +5,7 @@ import:
 - package: github.com/smallnest/goreq
 - package: github.com/spf13/cobra
 - package: github.com/kardianos/osext
+- package: github.com/nicksnyder/go-i18n
+  version: ^1.7.0
+  subpackages:
+  - goi18n
