@@ -1,0 +1,10 @@
+[
+  {
+    "id": "hello_world",
+    "translation": "你好，世界！"
+  },
+  {
+    "id": "lang_debug_candidate_loaded",
+    "translation": "指定语言 {{.LangCfg}}，实际载入语言 {{.LangLoaded}}"
+  }
+]

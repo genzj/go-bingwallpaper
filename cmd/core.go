@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/genzj/go-bingwallpaper/i18n"
 	"github.com/genzj/go-bingwallpaper/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -17,7 +18,7 @@ var coreCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		log.WithFields(log.Fields{
 			"test": viper.GetString("test"),
-		}).Infoln("Hello world!")
+		}).Infoln(i18n.T("hello_world"))
 		log.Infoln("Bye.")
 		execute(cmd, args)
 	},

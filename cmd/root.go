@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/genzj/go-bingwallpaper/i18n"
 	"github.com/genzj/go-bingwallpaper/log"
 	"github.com/genzj/go-bingwallpaper/util"
 	"github.com/spf13/cobra"
@@ -14,6 +15,7 @@ import (
 const APP_NAME string = "go-bingwallpaper"
 
 var cfgFile string
+var lang string
 
 var RootCmd = &cobra.Command{
 	Use:   APP_NAME,
@@ -28,6 +30,10 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
+}
+
+func initI18n() {
+	i18n.LoadTFunc(lang)
 }
 
 func initConfig() {
@@ -55,6 +61,9 @@ func initConfig() {
 }
 
 func init() {
+	cobra.OnInitialize(initI18n)
 	cobra.OnInitialize(initConfig)
 	RootCmd.PersistentFlags().StringVar(&cfgFile, "config-file", "", "config file (default is ./config.json)")
+	RootCmd.PersistentFlags().StringVar(&lang, "lang", "en-us", "language used for display, in xx-YY format.")
+
 }

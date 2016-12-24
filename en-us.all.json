@@ -1,0 +1,10 @@
+[
+  {
+    "id": "hello_world",
+    "translation": "Hello world!"
+  },
+  {
+    "id": "lang_debug_candidate_loaded",
+    "translation": "specified language {{.LangCfg}}, language loaded: {{.LangLoaded}}"
+  }
+]

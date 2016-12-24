@@ -26,7 +26,9 @@ help:
 build:
 	@echo "building ${BIN_NAME} ${VERSION}"
 	@echo "GOPATH=${GOPATH}"
-	go build -ldflags "-X main.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X main.VersionPrerelease=DEV" -o bin/${BIN_NAME}
+	mkdir -p bin/i18n/ && \
+		cp *.all.json bin/i18n/ && \
+		go build -ldflags "-X main.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X main.VersionPrerelease=DEV" -o bin/${BIN_NAME}
 
 build-alpine:
 	@echo "building ${BIN_NAME} ${VERSION}"
@@ -43,7 +45,7 @@ package:
 	@echo "building image ${BIN_NAME} ${VERSION} $(GIT_COMMIT)"
 	docker build --build-arg VERSION=${VERSION} --build-arg GIT_COMMIT=$(GIT_COMMIT) -t $(IMAGE_NAME):local .
 
-tag: 
+tag:
 	@echo "Tagging: latest ${VERSION} $(GIT_COMMIT)"
 	docker tag $(IMAGE_NAME):local $(IMAGE_NAME):$(GIT_COMMIT)
 	docker tag $(IMAGE_NAME):local $(IMAGE_NAME):${VERSION}
@@ -61,3 +63,8 @@ clean:
 test:
 	go test ./...
 
+compile-messages:
+	goi18n *.all.json *.untranslated.json
+
+extract-messages:
+	goi18n *.all.json
