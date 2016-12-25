@@ -221,7 +221,7 @@ func (hook ContextHook) Fire(entry *logrus.Entry) error {
 	for i := 0; i < cnt; i++ {
 		fu := runtime.FuncForPC(pc[i] - 1)
 		name := fu.Name()
-		if !strings.Contains(name, "github.com/Sirupsen/logrus") && !strings.Contains(name, "github.com/genzj/go-bingwallpaper/log.") {
+		if !strings.Contains(name, "github.com/Sirupsen/logrus") && !strings.Contains(name, "github.com/genzj/gobingwallpaper/log.") {
 			file, line := fu.FileLine(pc[i] - 1)
 			entry.Data["__file__"] = path.Base(file)
 			entry.Data["__func__"] = path.Base(name)

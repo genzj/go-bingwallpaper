@@ -1,7 +1,7 @@
 package util
 
 import (
-	"github.com/genzj/go-bingwallpaper/log"
+	"github.com/genzj/gobingwallpaper/log"
 	"github.com/kardianos/osext"
 )
 

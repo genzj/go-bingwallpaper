@@ -1,4 +1,4 @@
-# go-bingwallpaper
+# gobingwallpaper
 
 A Go application downloading latest wallpaper from Bing.com.
 
@@ -10,7 +10,7 @@ Running it then should be as simple as:
 
 ```console
 $ make
-$ ./bin/go-bingwallpaper
+$ ./bin/gobingwallpaper
 ```
 
 ### Testing

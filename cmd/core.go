@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"github.com/genzj/go-bingwallpaper/i18n"
-	"github.com/genzj/go-bingwallpaper/log"
+	"github.com/genzj/gobingwallpaper/i18n"
+	"github.com/genzj/gobingwallpaper/log"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

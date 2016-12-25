@@ -4,15 +4,15 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/genzj/go-bingwallpaper/i18n"
-	"github.com/genzj/go-bingwallpaper/log"
-	"github.com/genzj/go-bingwallpaper/util"
+	"github.com/genzj/gobingwallpaper/i18n"
+	"github.com/genzj/gobingwallpaper/log"
+	"github.com/genzj/gobingwallpaper/util"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
 
 // AppName states name of the project
-const AppName string = "go-bingwallpaper"
+const AppName string = "gobingwallpaper"
 
 var cfgFile string
 var lang string

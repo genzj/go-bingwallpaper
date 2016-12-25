@@ -1,16 +1,16 @@
 .PHONY: build build-alpine clean test help default
 
-BIN_NAME=go-bingwallpaper
+BIN_NAME=gobingwallpaper
 
 VERSION := $(shell grep "const Version " version.go | sed -E 's/.*"(.+)"$$/\1/')
 GIT_COMMIT=$(shell git rev-parse HEAD)
 GIT_DIRTY=$(shell test -n "`git status --porcelain`" && echo "+CHANGES" || true)
-IMAGE_NAME := "genzj/go-bingwallpaper"
+IMAGE_NAME := "genzj/gobingwallpaper"
 
 default: build
 
 help:
-	@echo 'Management commands for go-bingwallpaper:'
+	@echo 'Management commands for gobingwallpaper:'
 	@echo
 	@echo 'Usage:'
 	@echo '    make build           Compile the project.'
@@ -37,9 +37,9 @@ build-alpine:
 
 build-docker:
 	@echo "building ${BIN_NAME} ${VERSION}"
-	docker build -t go-bingwallpaper:build -f Dockerfile.build .
-	docker run --name=go-bingwallpaper -v $(GOPATH):/gopath/  go-bingwallpaper:build
-	docker rm -f go-bingwallpaper
+	docker build -t gobingwallpaper:build -f Dockerfile.build .
+	docker run --name=gobingwallpaper -v $(GOPATH):/gopath/  gobingwallpaper:build
+	docker rm -f gobingwallpaper
 
 package:
 	@echo "building image ${BIN_NAME} ${VERSION} $(GIT_COMMIT)"

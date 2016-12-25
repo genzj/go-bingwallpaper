@@ -1,4 +1,4 @@
-package: github.com/genzj/go-bingwallpaper
+package: github.com/genzj/gobingwallpaper
 import:
 - package: github.com/spf13/viper
 - package: github.com/Sirupsen/logrus
