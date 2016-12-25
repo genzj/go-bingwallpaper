@@ -9,3 +9,6 @@ import:
   version: ^1.7.0
   subpackages:
   - goi18n
+- package: golang.org/x/net
+  subpackages:
+  - proxy

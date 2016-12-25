@@ -6,5 +6,17 @@
   {
     "id": "lang_debug_candidate_loaded",
     "translation": "specified language {{.LangCfg}}, language loaded: {{.LangLoaded}}"
+  },
+  {
+    "id": "http_get_error_url",
+    "translation": "Getting {{.URL}} failed due to error {{.Error}}."
+  },
+  {
+    "id": "http_content_type_error_url",
+    "translation": "{{.URL}} returns unexpected content-type {{.Type}}."
+  },
+  {
+    "id": "proxy_url_parse_error",
+    "translation": "{{.URL}} is not a valid proxy URL: {{.Error}}."
   }
 ]

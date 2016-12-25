@@ -1,5 +1,5 @@
-hash: 19e475029aefe79d31fd34482aeedf381ae6b51ff3338434199e032c1698117a
-updated: 2016-12-23T13:58:12.3652124+08:00
+hash: 61ca2c1e6fdc83b01331417b0034fd66ae65fc79798a416c208faffe95c623bf
+updated: 2016-12-25T19:04:07.127160093+08:00
 imports:
 - name: github.com/fsnotify/fsnotify
   version: fd9ec7deca8bf46ecd2a795baaacf2b3a9be1197
@@ -26,6 +26,10 @@ imports:
   version: f757c9f9b69c16ff69d38dbf224be28a7b6537bb
   subpackages:
   - goi18n
+  - i18n
+  - i18n/bundle
+  - i18n/language
+  - i18n/translation
 - name: github.com/pelletier/go-buffruneio
   version: df1e16fde7fc330a0ca68167c23bf7ed6ac31d6d
 - name: github.com/pelletier/go-toml
@@ -48,6 +52,10 @@ imports:
   version: 25f8b5b07aece3207895bf19f7ab517eb3b22a40
 - name: github.com/spf13/viper
   version: 5ed0fc31f7f453625df314d8e66b9791e8d13003
+- name: golang.org/x/net
+  version: 45e771701b814666a7eb299e6c7a57d0b1799e91
+  subpackages:
+  - proxy
 - name: golang.org/x/sys
   version: d75a52659825e75fff6158388dddc6a5b04f9ba5
   subpackages:
