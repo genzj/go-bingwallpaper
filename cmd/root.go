@@ -11,14 +11,15 @@ import (
 	"github.com/spf13/viper"
 )
 
-// name of the project
-const APP_NAME string = "go-bingwallpaper"
+// AppName states name of the project
+const AppName string = "go-bingwallpaper"
 
 var cfgFile string
 var lang string
 
+// RootCmd is the entry of whole program
 var RootCmd = &cobra.Command{
-	Use:   APP_NAME,
+	Use:   AppName,
 	Short: "A Go application downloading latest wallpaper from Bing.com.",
 	Long: `Download the daily bing wallpaper and set it your desktop. Also
 integrates a WEB UI for configuration.`,
@@ -33,11 +34,16 @@ func Execute() {
 }
 
 func initI18n() {
+	i18n.SetLanguageFilePath(util.ExecutableFolder() + "/i18n")
 	i18n.LoadTFunc(lang)
+	log.Debug(i18n.T("lang_debug_candidate_loaded", i18n.Fields{
+		"LangCfg":    lang,
+		"LangLoaded": i18n.GetLoadedLang(),
+	}))
 }
 
 func initConfig() {
-	viper.SetEnvPrefix(APP_NAME)
+	viper.SetEnvPrefix(AppName)
 	viper.SetConfigType("json")
 
 	if cfgFile != "" { // enable ability to specify config file via flag
