@@ -1,19 +1,27 @@
 [
   {
-    "id": "hello_world",
-    "translation": "Hello world!"
-  },
-  {
-    "id": "lang_debug_candidate_loaded",
-    "translation": "specified language {{.LangCfg}}, language loaded: {{.LangLoaded}}"
+    "id": "http_content_type_error_url",
+    "translation": "response contains content-type '{{.Type}}' but '{{.Expected}}' is expected."
   },
   {
     "id": "http_get_error_url",
     "translation": "Getting {{.URL}} failed due to error {{.Error}}."
   },
   {
-    "id": "http_content_type_error_url",
-    "translation": "response contains content-type '{{.Type}}' but '{{.Expected}}' is expected."
+    "id": "image_download_begin",
+    "translation": "Downloading image..."
+  },
+  {
+    "id": "image_downloaded",
+    "translation": "Image downloaded successfully."
+  },
+  {
+    "id": "image_info_parsed",
+    "translation": "Read image info from bing.com successfully."
+  },
+  {
+    "id": "lang_debug_candidate_loaded",
+    "translation": "specified language {{.LangCfg}}, language loaded: {{.LangLoaded}}"
   },
   {
     "id": "proxy_url_parse_error",

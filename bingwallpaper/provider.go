@@ -15,6 +15,7 @@ type Provider interface {
 var (
 	DefaultBaseProvider = BaseProvider{
 		BaseURL: "http://www.bing.com/HPImageArchive.aspx",
+		Video:   1,
 	}
 )
 

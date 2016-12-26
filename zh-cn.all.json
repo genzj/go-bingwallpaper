@@ -1,10 +1,30 @@
 [
   {
-    "id": "hello_world",
-    "translation": "你好，世界！"
+    "id": "http_content_type_error_url",
+    "translation": "HTTP响应类型'{{.Type}}'与期望类型'{{.Expected}}'不符。"
+  },
+  {
+    "id": "http_get_error_url",
+    "translation": "访问{{.URL}}时发生错误：{{.Error}}."
+  },
+  {
+    "id": "image_download_begin",
+    "translation": "开始下载图片..."
+  },
+  {
+    "id": "image_downloaded",
+    "translation": "图片下载成功。"
+  },
+  {
+    "id": "image_info_parsed",
+    "translation": "成功读取Bing.com图片基本信息。"
   },
   {
     "id": "lang_debug_candidate_loaded",
     "translation": "指定语言 {{.LangCfg}}，实际载入语言 {{.LangLoaded}}"
+  },
+  {
+    "id": "proxy_url_parse_error",
+    "translation": "解析代理地址{{.URL}}时出错：{{.Error}}."
   }
 ]

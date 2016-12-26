@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"github.com/genzj/gobingwallpaper/bingwallpaper"
 	"github.com/genzj/gobingwallpaper/i18n"
 	"github.com/genzj/gobingwallpaper/log"
 	"github.com/spf13/cobra"
@@ -21,6 +22,7 @@ var coreCmd = &cobra.Command{
 		}).Infoln(i18n.T("hello_world"))
 		log.Infoln("Bye.")
 		execute(cmd, args)
+		bingwallpaper.SimpleDownload()
 	},
 }
 

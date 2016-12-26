@@ -1,8 +1,11 @@
 package util
 
 import (
+	"bytes"
 	"encoding/json"
 	"errors"
+	"image"
+	_ "image/jpeg" // for jpeg decoder registration
 	"io/ioutil"
 	"net/http"
 	"net/url"
@@ -51,10 +54,9 @@ func newClient() {
 				"Error": err,
 			}))
 			return
-		} else {
-			log.Debugf("SOCKS5 proxy %T installed from URL %v", dialer, proxyURL)
 		}
 
+		log.Debugf("SOCKS5 proxy %T installed from URL %v", dialer, proxyURL)
 		transport.Dial = dialer.Dial
 		transport.Proxy = nil
 	default:
@@ -90,14 +92,13 @@ func SetProxy(proxyType string, proxyURL string) {
 	log.Debugf("change proxy configuration to %+v", proxyConf)
 }
 
-func httpGet(url string) (*http.Response, error) {
+func issueGetRequest(url string) (*http.Response, error) {
 	if client == nil {
 		newClient()
 	}
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
-		logError(url, err)
 		return nil, err
 	}
 
@@ -116,30 +117,46 @@ func validateContentType(resp *http.Response, expected string) error {
 	return nil
 }
 
-// HTTPGetJSON retrieves json from specified URL then unmarshal response body
-// into data struct. Returns errors happened in http session, or response isn't
-// application/json mime type
-func HTTPGetJSON(url string, data interface{}) error {
-	resp, err := httpGet(url)
+func getAndRead(url string, expectedType string) ([]byte, error) {
+	resp, err := issueGetRequest(url)
 	if err != nil {
-		logError(url, err)
-		return err
+		return nil, err
 	}
 
 	defer resp.Body.Close()
 
-	err = validateContentType(resp, "application/json")
-	if err != nil {
-		logError(url, err)
-		return err
+	if expectedType != "" {
+		err = validateContentType(resp, expectedType)
+		if err != nil {
+			return nil, err
+		}
 	}
 
-	body, err := ioutil.ReadAll(resp.Body)
+	return ioutil.ReadAll(resp.Body)
+}
+
+// HTTPGet issues a get request to specified HTTP endpoint then return
+// response content. If expectedType is not zero value, Content-Type in
+// response header will be checked to match the specified type prefix
+func HTTPGet(url string, expectedType string) ([]byte, error) {
+	body, err := getAndRead(url, expectedType)
+	if err != nil {
+		logError(url, err)
+		return nil, err
+	}
+
+	return body, nil
+}
+
+// HTTPGetJSON retrieves json from specified URL then unmarshal response body
+// into data struct. Returns errors happened in http session, or response isn't
+// application/json mime type
+func HTTPGetJSON(url string, data interface{}) error {
+	body, err := HTTPGet(url, "application/json")
 	if err != nil {
 		logError(url, err)
 		return err
 	}
-	//log.Debugf("response: %#v", string(body))
 
 	err = json.Unmarshal(body, data)
 	if err != nil {
@@ -149,4 +166,24 @@ func HTTPGetJSON(url string, data interface{}) error {
 	//log.Debugf("response JSON: %#v", data)
 
 	return nil
+}
+
+// HTTPGetJpeg downloads jpeg image from given URL then return parsed image
+// struct. Error will be returned if any exception occurs during http request
+// or response isn't in image/jpeg type.
+func HTTPGetJpeg(url string) (image.Image, error) {
+	body, err := HTTPGet(url, "image/jpeg")
+	if err != nil {
+		logError(url, err)
+		return nil, err
+	}
+
+	img, _, err := image.Decode(bytes.NewReader(body))
+	if err != nil {
+		logError(url, err)
+		return nil, err
+	}
+	//log.Debugf("response JSON: %#v", data)
+
+	return img, nil
 }
