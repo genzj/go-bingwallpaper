@@ -30,6 +30,21 @@ func SetLanguageFilePath(path string) string {
 	return lastPath
 }
 
+// LoadMockTFunc frees unit test procedures from translation file loading.
+// Unit tests can load mock translation functions in TestMain like:
+//   func TestMain(m *testing.M) {
+//       i18n.LoadMockTFunc()
+//       flag.Parse()
+//       os.Exit(m.Run())
+//   }
+// MockTFunc returns and set global Tfunc to a func returns message id directly
+// without any translation.
+func LoadMockTFunc() i18n.TranslateFunc {
+	T, _ := i18n.Tfunc(DefaultLanguage)
+	tFunc = T
+	return T
+}
+
 // LoadTFunc loads translation file and return the T function according to
 // the specified language code which is in go-i18n/i18n compatible notation.
 // It has side-effect that updates package global T function. The defaultLanguage

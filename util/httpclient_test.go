@@ -38,7 +38,7 @@ func TestHttpGetJSONIncorrectType(t *testing.T) {
 		t.Fatalf("expected error not happened")
 	}
 
-	if !strings.Contains(err.Error(), "returns unexpected content-type") {
+	if !strings.Contains(err.Error(), "http_content_type_error_url") {
 		t.Fatalf("unexpected error %v happened instead of content-type error", err)
 	}
 }
@@ -49,7 +49,7 @@ func TestHttpSetProxy(t *testing.T) {
 }
 
 func TestMain(m *testing.M) {
-	i18n.SetLanguageFilePath(".")
+	i18n.LoadMockTFunc()
 	flag.Parse()
 	os.Exit(m.Run())
 }
