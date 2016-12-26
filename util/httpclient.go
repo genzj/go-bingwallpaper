@@ -90,10 +90,7 @@ func SetProxy(proxyType string, proxyURL string) {
 	log.Debugf("change proxy configuration to %+v", proxyConf)
 }
 
-// GetJSON retrieves json from specified URL then unmarshal response body
-// into data struct. Returns errors happened in http session, or response isn't
-// application/json mime type
-func HttpGetJSON(url string, data interface{}) error {
+func httpGet(url string) (*http.Response, error) {
 	if client == nil {
 		newClient()
 	}
@@ -101,22 +98,38 @@ func HttpGetJSON(url string, data interface{}) error {
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		logError(url, err)
-		return err
+		return nil, err
 	}
 
-	resp, err := client.Do(req)
+	return client.Do(req)
+}
+
+func validateContentType(resp *http.Response, expected string) error {
+	ct := strings.TrimSpace(strings.ToLower(resp.Header.Get("Content-Type")))
+	if !strings.HasPrefix(ct, expected) {
+		err := errors.New(i18n.T("http_content_type_error_url", i18n.Fields{
+			"Expected": expected,
+			"Type":     ct,
+		}))
+		return err
+	}
+	return nil
+}
+
+// HTTPGetJSON retrieves json from specified URL then unmarshal response body
+// into data struct. Returns errors happened in http session, or response isn't
+// application/json mime type
+func HTTPGetJSON(url string, data interface{}) error {
+	resp, err := httpGet(url)
 	if err != nil {
 		logError(url, err)
 		return err
 	}
+
 	defer resp.Body.Close()
 
-	ct := strings.TrimSpace(strings.ToLower(resp.Header.Get("Content-Type")))
-	if !strings.HasPrefix(ct, "application/json") {
-		err := errors.New(i18n.T("http_content_type_error_url", i18n.Fields{
-			"URL":  url,
-			"Type": ct,
-		}))
+	err = validateContentType(resp, "application/json")
+	if err != nil {
 		logError(url, err)
 		return err
 	}
@@ -126,14 +139,14 @@ func HttpGetJSON(url string, data interface{}) error {
 		logError(url, err)
 		return err
 	}
-	// log.Debugf("response: %#v", string(body))
+	//log.Debugf("response: %#v", string(body))
 
 	err = json.Unmarshal(body, data)
 	if err != nil {
 		logError(url, err)
 		return err
 	}
-	// log.Debugf("response JSON: %#v", data)
+	//log.Debugf("response JSON: %#v", data)
 
 	return nil
 }

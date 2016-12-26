@@ -13,7 +13,7 @@
   },
   {
     "id": "http_content_type_error_url",
-    "translation": "{{.URL}} returns unexpected content-type {{.Type}}."
+    "translation": "response contains content-type '{{.Type}}' but '{{.Expected}}' is expected."
   },
   {
     "id": "proxy_url_parse_error",
