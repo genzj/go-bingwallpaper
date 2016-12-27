@@ -10,6 +10,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/genzj/gobingwallpaper/i18n"
@@ -17,14 +18,24 @@ import (
 	"golang.org/x/net/proxy"
 )
 
-var client *http.Client
+var once sync.Once
+var clientSingleton *http.Client
 
 var proxyConf struct {
+	sync.Mutex
 	proxyType string
 	proxyURL  string
 }
 
+func getClient() *http.Client {
+	once.Do(newClient)
+	return clientSingleton
+}
+
 func newClient() {
+	proxyConf.Lock()
+	defer proxyConf.Unlock()
+
 	transport := http.Transport{
 		MaxIdleConns:          100,
 		IdleConnTimeout:       90 * time.Second,
@@ -63,7 +74,7 @@ func newClient() {
 		transport.Proxy = http.ProxyFromEnvironment
 	}
 
-	client = &nextClient
+	clientSingleton = &nextClient
 
 }
 
@@ -72,9 +83,6 @@ func logError(url string, err error) {
 		"URL":   url,
 		"Error": err,
 	}
-
-	// respawn client on next request
-	client = nil
 
 	log.WithFields(fields).Error(i18n.T("http_get_error_url", fields))
 }
@@ -87,15 +95,20 @@ func logError(url string, err error) {
 // golang.org/x/net/proxy.FromURL will be called to get the final proxy
 // env - proxy will be load from environment variable, default value
 func SetProxy(proxyType string, proxyURL string) {
+	proxyConf.Lock()
+	defer proxyConf.Unlock()
+
 	proxyConf.proxyType = proxyType
 	proxyConf.proxyURL = proxyURL
+
+	// respawn client on next request
+	once = sync.Once{}
+
 	log.Debugf("change proxy configuration to %+v", proxyConf)
 }
 
 func issueGetRequest(url string) (*http.Response, error) {
-	if client == nil {
-		newClient()
-	}
+	client := getClient()
 
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {

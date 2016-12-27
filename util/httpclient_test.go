@@ -56,6 +56,15 @@ func TestHttpSetProxy(t *testing.T) {
 	TestHttpGetJSON(t)
 }
 
+func TestHttpSetProxyCreateSingleton(t *testing.T) {
+	client1 := getClient()
+	SetProxy("socks5", "socks5://127.0.0.1:1080")
+	client2 := getClient()
+	if client1 == client2 {
+		t.Fatal("no new client created after setting proxy")
+	}
+}
+
 func TestMain(m *testing.M) {
 	var responder httpmock.Responder
 	var jsonResponse interface{}
@@ -137,7 +146,7 @@ func TestMain(m *testing.M) {
 	}
 
 	newClient()
-	client.Transport = httpmock.DefaultTransport
+	clientSingleton.Transport = httpmock.DefaultTransport
 
 	flag.Parse()
 	os.Exit(m.Run())
