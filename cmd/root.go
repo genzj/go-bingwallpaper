@@ -59,7 +59,9 @@ func initConfig() {
 	if err := viper.ReadInConfig(); err == nil {
 		log.Debugln("Using config file:", viper.ConfigFileUsed())
 	} else if cfgFile != "" {
-		log.Fatalf("Specified configuration file %v not readable", cfgFile)
+		log.WithFields(log.Fields{
+			"CfgFile": cfgFile,
+		}).Fatalf(i18n.T("config_file_not_readable"))
 
 	} else {
 		log.Debugln("No config file found, use default settings")

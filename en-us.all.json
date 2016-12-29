@@ -1,5 +1,9 @@
 [
   {
+    "id": "config_file_not_readable",
+    "translation": "Specified configuration file not readable"
+  },
+  {
     "id": "http_content_type_error_url",
     "translation": "response contains content-type '{{.Type}}' but '{{.Expected}}' is expected."
   },

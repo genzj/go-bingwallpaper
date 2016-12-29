@@ -1,5 +1,9 @@
 [
   {
+    "id": "config_file_not_readable",
+    "translation": "无法读取指定的配置文件"
+  },
+  {
     "id": "http_content_type_error_url",
     "translation": "HTTP响应类型'{{.Type}}'与期望类型'{{.Expected}}'不符。"
   },
