@@ -21,14 +21,6 @@ var coreCmd = &cobra.Command{
 			"test": viper.GetString("test"),
 		}).Infoln(i18n.T("hello_world"))
 		log.Infoln("Bye.")
-		execute(cmd, args)
 		bingwallpaper.SimpleDownload()
 	},
-}
-
-func execute(cmd *cobra.Command, args []string) {
-	log.WithFields(log.Fields{
-		"test": viper.GetString("test"),
-	}).Infoln("Hello world!")
-	log.Infoln("Bye.")
 }

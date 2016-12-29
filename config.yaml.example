@@ -1,0 +1,6 @@
+---
+global:
+  HistoryFile: ./history-test.json
+  Language: zh-cn
+
+# vim: set ft=yaml expandtab shiftwidth=2 softtabstop=2:

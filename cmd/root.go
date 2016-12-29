@@ -35,16 +35,16 @@ func Execute() {
 
 func initI18n() {
 	i18n.SetLanguageFilePath(util.ExecutableFolder() + "/i18n")
-	i18n.LoadTFunc(lang)
+	i18n.LoadTFunc(viper.GetString("global.Language"))
 	log.Debug(i18n.T("lang_debug_candidate_loaded", i18n.Fields{
-		"LangCfg":    lang,
+		"LangCfg":    viper.GetString("global.Language"),
 		"LangLoaded": i18n.GetLoadedLang(),
 	}))
 }
 
 func initConfig() {
 	viper.SetEnvPrefix(AppName)
-	viper.SetConfigType("json")
+	viper.SetConfigType("yaml")
 
 	if cfgFile != "" { // enable ability to specify config file via flag
 		viper.SetConfigFile(cfgFile)
@@ -69,9 +69,13 @@ func initConfig() {
 }
 
 func init() {
-	cobra.OnInitialize(initI18n)
 	cobra.OnInitialize(initConfig)
-	RootCmd.PersistentFlags().StringVar(&cfgFile, "config-file", "", "config file (default is ./config.json)")
+	cobra.OnInitialize(initI18n)
+	RootCmd.PersistentFlags().StringVar(&cfgFile, "config-file", "", "config file (default is ./config.yaml under app installation path.)")
+	RootCmd.PersistentFlags().String("history-file", "", "history file (default is ./history.json under app installation path.)")
+	viper.BindPFlag("global.HistoryFile", RootCmd.PersistentFlags().Lookup("history-file"))
+	viper.SetDefault("global.HistoryFile", "./history.json")
 	RootCmd.PersistentFlags().StringVar(&lang, "lang", "en-us", "language used for display, in xx-YY format.")
-
+	viper.BindPFlag("global.Language", RootCmd.PersistentFlags().Lookup("lang"))
+	viper.SetDefault("global.Language", "en-us")
 }

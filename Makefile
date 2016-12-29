@@ -28,6 +28,7 @@ build:
 	@echo "GOPATH=${GOPATH}"
 	mkdir -p bin/i18n/ && \
 		cp *.all.json bin/i18n/ && \
+		cp *.example bin/ && \
 		go build -ldflags "-X main.GitCommit=${GIT_COMMIT}${GIT_DIRTY} -X main.VersionPrerelease=DEV" -o bin/${BIN_NAME}
 
 build-alpine:
